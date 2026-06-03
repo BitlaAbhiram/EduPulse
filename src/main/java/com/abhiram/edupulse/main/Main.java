@@ -1,56 +1,56 @@
 package com.abhiram.edupulse.main;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Scanner;
 
-import com.abhiram.edupulse.model.Student;
 import com.abhiram.edupulse.service.StudentService;
-import com.abhiram.edupulse.util.GPAUtil;
 
 public class Main {
 
     public static void main(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
         StudentService service = new StudentService();
 
-        HashMap<String, Integer> marks = new HashMap<>();
+        while (true) {
 
-        marks.put("Java", 95);
-        marks.put("DSA", 90);
-        marks.put("DBMS", 88);
-        marks.put("OS", 92);
+            System.out.println("\n=================================");
+            System.out.println("         EDUPULSE");
+            System.out.println("=================================");
+            System.out.println("1. Add Student");
+            System.out.println("2. View Students");
+            System.out.println("3. Search Student");
+            System.out.println("4. Delete Student");
+            System.out.println("5. Exit");
 
-        Student student = new Student(
-                101,
-                "Abhiram",
-                "AIML",
-                4,
-                "abhiram@gmail.com",
-                92.5,
-                marks,
-                new ArrayList<>()
-        );
+            System.out.print("\nEnter Choice: ");
 
-        service.addStudent(student);
+            int choice = scanner.nextInt();
 
-        double average = GPAUtil.calculateAverage(marks);
-        double gpa = GPAUtil.calculateGPA(marks);
-        String grade = GPAUtil.calculateGrade(average);
+            switch (choice) {
 
-        System.out.println("\n===== STUDENT REPORT =====");
+                case 1:
+                    System.out.println("Add Student - Coming Next");
+                    break;
 
-        System.out.println(student);
+                case 2:
+                    service.displayAllStudents();
+                    break;
 
-        System.out.println("\nTotal Marks : "
-                + GPAUtil.calculateTotal(marks));
+                case 3:
+                    System.out.println("Search Student - Coming Next");
+                    break;
 
-        System.out.println("Average     : "
-                + average);
+                case 4:
+                    System.out.println("Delete Student - Coming Next");
+                    break;
 
-        System.out.println("GPA         : "
-                + gpa);
+                case 5:
+                    System.out.println("Thank you for using EduPulse!");
+                    System.exit(0);
 
-        System.out.println("Grade       : "
-                + grade);
+                default:
+                    System.out.println("Invalid Choice!");
+            }
+        }
     }
 }
