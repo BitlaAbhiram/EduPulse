@@ -1,7 +1,10 @@
 package com.abhiram.edupulse.main;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
+import com.abhiram.edupulse.model.Student;
 import com.abhiram.edupulse.service.StudentService;
 
 public class Main {
@@ -29,7 +32,7 @@ public class Main {
             switch (choice) {
 
                 case 1:
-                    System.out.println("Add Student - Coming Next");
+                    addStudent(scanner, service);
                     break;
 
                 case 2:
@@ -37,11 +40,11 @@ public class Main {
                     break;
 
                 case 3:
-                    System.out.println("Search Student - Coming Next");
+                    searchStudent(scanner, service);
                     break;
 
                 case 4:
-                    System.out.println("Delete Student - Coming Next");
+                    deleteStudent(scanner, service);
                     break;
 
                 case 5:
@@ -52,5 +55,91 @@ public class Main {
                     System.out.println("Invalid Choice!");
             }
         }
+    }
+
+    private static void deleteStudent(
+            Scanner scanner,
+            StudentService service) {
+
+        System.out.print("Enter Student ID: ");
+
+        int id = scanner.nextInt();
+
+        if (service.deleteStudent(id)) {
+            System.out.println("Student deleted successfully!");
+        } else {
+            System.out.println("Student not found!");
+        }
+    }
+
+    private static void searchStudent(
+            Scanner scanner,
+            StudentService service) {
+
+        System.out.print("Enter Student ID: ");
+
+        int id = scanner.nextInt();
+
+        Student student = service.findStudentById(id);
+
+        if (student != null) {
+            System.out.println(student);
+        } else {
+            System.out.println("Student not found!");
+        }
+    }
+
+    private static void addStudent(Scanner scanner, StudentService service) {
+
+        System.out.print("Student ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Department: ");
+        String department = scanner.nextLine();
+
+        System.out.print("Semester: ");
+        int semester = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Attendance (%): ");
+        double attendance = scanner.nextDouble();
+
+        HashMap<String, Integer> marks = new HashMap<>();
+
+        System.out.print("Number of Subjects: ");
+        int subjects = scanner.nextInt();
+        scanner.nextLine();
+
+        for (int i = 1; i <= subjects; i++) {
+
+            System.out.print("Subject Name: ");
+            String subject = scanner.nextLine();
+
+            System.out.print("Marks: ");
+            int score = scanner.nextInt();
+            scanner.nextLine();
+
+            marks.put(subject, score);
+        }
+
+        Student student = new Student(
+                id,
+                name,
+                department,
+                semester,
+                email,
+                attendance,
+                marks,
+                new ArrayList<>()
+        );
+
+        service.addStudent(student);
     }
 }
