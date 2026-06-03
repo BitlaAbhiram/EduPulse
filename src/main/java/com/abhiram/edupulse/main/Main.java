@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import com.abhiram.edupulse.analytics.AnalyticsService;
 import com.abhiram.edupulse.model.Student;
 import com.abhiram.edupulse.service.StudentService;
+import com.abhiram.edupulse.util.ReportGenerator;
 
 public class Main {
 
@@ -23,7 +25,9 @@ public class Main {
             System.out.println("2. View Students");
             System.out.println("3. Search Student");
             System.out.println("4. Delete Student");
-            System.out.println("5. Exit");
+            System.out.println("5. Generate Report");
+            System.out.println("6. Analytics Dashboard");
+            System.out.println("7. Exit");
 
             System.out.print("\nEnter Choice: ");
 
@@ -48,7 +52,14 @@ public class Main {
                     break;
 
                 case 5:
-                    System.out.println("Thank you for using EduPulse!");
+                    generateReport(scanner, service);
+                    break;
+
+                case 6:
+                    showAnalytics(service);
+                    break;
+
+                case 7:
                     System.exit(0);
 
                 default:
@@ -70,6 +81,70 @@ public class Main {
         } else {
             System.out.println("Student not found!");
         }
+    }
+
+    private static void generateReport(
+            Scanner scanner,
+            StudentService service) {
+
+        System.out.print("Enter Student ID: ");
+
+        int id = scanner.nextInt();
+
+        Student student
+                = service.findStudentById(id);
+
+        if (student != null) {
+
+            ReportGenerator.generateReport(student);
+
+        } else {
+
+            System.out.println("Student not found!");
+
+        }
+    }
+
+    private static void showAnalytics(
+            StudentService service) {
+
+        if (service.getStudents().isEmpty()) {
+
+            System.out.println("No student data found!");
+            return;
+        }
+
+        System.out.println("\n=================================");
+        System.out.println("      EDUPULSE ANALYTICS");
+        System.out.println("=================================");
+
+        System.out.println(
+                "Class Average GPA : "
+                + String.format("%.2f",
+                        AnalyticsService.getClassAverage(
+                                service.getStudents()
+                        )));
+
+        Student topper
+                = AnalyticsService.getTopPerformer(
+                        service.getStudents());
+
+        System.out.println(
+                "Top Performer    : "
+                + topper.getName());
+
+        System.out.println(
+                "Highest GPA      : "
+                + String.format("%.2f",
+                        AnalyticsService.getHighestGPA(
+                                service.getStudents()
+                        )));
+
+        System.out.println(
+                "Total Students   : "
+                + service.getStudents().size());
+
+        System.out.println("=================================");
     }
 
     private static void searchStudent(
@@ -142,4 +217,5 @@ public class Main {
 
         service.addStudent(student);
     }
+
 }

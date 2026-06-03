@@ -18,6 +18,10 @@ public class StudentService {
         return students;
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
     public Student findStudentById(int id) {
 
         for (Student student : students) {
@@ -28,20 +32,20 @@ public class StudentService {
 
         return null;
     }
-    
+
     public void displayAllStudents() {
 
-    if (students.isEmpty()) {
-        System.out.println("No students found!");
-        return;
-    }
+        if (students.isEmpty()) {
+            System.out.println("No students found!");
+            return;
+        }
 
-    for (Student student : students) {
-        System.out.println();
-        System.out.println(student);
-        System.out.println("------------------------");
+        for (Student student : students) {
+            System.out.println();
+            System.out.println(student);
+            System.out.println("------------------------");
+        }
     }
-}
 
     public boolean deleteStudent(int id) {
 
