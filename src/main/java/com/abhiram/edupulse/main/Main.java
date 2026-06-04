@@ -7,6 +7,7 @@ import java.util.Scanner;
 import com.abhiram.edupulse.analytics.AnalyticsService;
 import com.abhiram.edupulse.model.Student;
 import com.abhiram.edupulse.service.StudentService;
+import com.abhiram.edupulse.storage.FileStorageService;
 import com.abhiram.edupulse.util.ReportGenerator;
 
 public class Main {
@@ -15,6 +16,10 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         StudentService service = new StudentService();
+
+        service.addAllStudents(
+                FileStorageService.loadStudents()
+        );
 
         while (true) {
 
@@ -60,6 +65,13 @@ public class Main {
                     break;
 
                 case 7:
+
+                    FileStorageService.saveStudents(
+                            service.getStudents());
+
+                    System.out.println(
+                            "Thank you for using EduPulse!");
+
                     System.exit(0);
 
                 default:

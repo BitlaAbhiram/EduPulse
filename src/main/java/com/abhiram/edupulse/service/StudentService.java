@@ -33,6 +33,11 @@ public class StudentService {
         return null;
     }
 
+    public void addAllStudents(List<Student> loadedStudents) {
+
+        students.addAll(loadedStudents);
+    }
+
     public void displayAllStudents() {
 
         if (students.isEmpty()) {

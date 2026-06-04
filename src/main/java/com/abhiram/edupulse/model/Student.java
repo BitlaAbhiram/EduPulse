@@ -44,6 +44,30 @@ public class Student {
         return name;
     }
 
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setSemester(int semester) {
+        this.semester = semester;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAttendance(double attendance) {
+        this.attendance = attendance;
+    }
+
     public String getDepartment() {
         return department;
     }
@@ -70,11 +94,11 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student ID: " + studentId +
-                "\nName: " + name +
-                "\nDepartment: " + department +
-                "\nSemester: " + semester +
-                "\nEmail: " + email +
-                "\nAttendance: " + attendance;
+        return "Student ID: " + studentId
+                + "\nName: " + name
+                + "\nDepartment: " + department
+                + "\nSemester: " + semester
+                + "\nEmail: " + email
+                + "\nAttendance: " + attendance;
     }
 }
