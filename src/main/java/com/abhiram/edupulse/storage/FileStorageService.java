@@ -34,13 +34,30 @@ public class FileStorageService {
 
             for (Student student : students) {
 
+                // Build subject marks string: subject1=marks1;subject2=marks2;...
+                StringBuilder marksBuilder = new StringBuilder();
+                HashMap<String, Integer> marks = student.getSubjectMarks();
+                if (marks != null && !marks.isEmpty()) {
+                    for (java.util.Map.Entry<String, Integer> entry : marks.entrySet()) {
+                        marksBuilder.append(entry.getKey())
+                                    .append("=")
+                                    .append(entry.getValue())
+                                    .append(";");
+                    }
+                    // Remove trailing semicolon
+                    if (marksBuilder.length() > 0) {
+                        marksBuilder.setLength(marksBuilder.length() - 1);
+                    }
+                }
+
                 writer.write(
                         student.getStudentId() + ","
                         + student.getName() + ","
                         + student.getDepartment() + ","
                         + student.getSemester() + ","
                         + student.getEmail() + ","
-                        + student.getAttendance()
+                        + student.getAttendance() + ","
+                        + marksBuilder.toString()
                 );
 
                 writer.newLine();
@@ -85,7 +102,26 @@ public class FileStorageService {
 
             while ((line = reader.readLine()) != null) {
 
-                String[] data = line.split(",");
+                if (line.trim().isEmpty()) continue;
+
+                String[] data = line.split(",", 7);
+
+                HashMap<String, Integer> marks = new HashMap<>();
+
+                // data[6] is the subject marks section (optional)
+                if (data.length >= 7 && !data[6].isEmpty()) {
+                    String[] subjectEntries = data[6].split(";");
+                    for (String entry : subjectEntries) {
+                        String[] kv = entry.split("=");
+                        if (kv.length == 2) {
+                            try {
+                                marks.put(kv[0].trim(),
+                                        Integer.parseInt(kv[1].trim()));
+                            } catch (NumberFormatException ignored) {
+                            }
+                        }
+                    }
+                }
 
                 Student student = new Student(
                         Integer.parseInt(data[0]),
@@ -94,7 +130,7 @@ public class FileStorageService {
                         Integer.parseInt(data[3]),
                         data[4],
                         Double.parseDouble(data[5]),
-                        new HashMap<>(),
+                        marks,
                         new ArrayList<>()
                 );
 

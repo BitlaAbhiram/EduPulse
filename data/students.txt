@@ -1,0 +1,3 @@
+12,rahul,CSD,4,rahul@gmail.com,83.0,Java=64;DSA=66;OS=86;DBMS=58
+11,rahul,CSD,4,rahul@gmail.com,83.0,Java=64;DSA=66;OS=86;DBMS=58
+14,goutham,CSM,5,goutham,78.0,Java=68;DSA=88;OS=47;DBMS=85
