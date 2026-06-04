@@ -1,3 +1,4 @@
+com\abhiram\edupulse\gui\EduPulseApp.class
 com\abhiram\edupulse\storage\FileStorageService.class
 com\abhiram\edupulse\service\StudentService.class
 com\abhiram\edupulse\analytics\AnalyticsService.class
